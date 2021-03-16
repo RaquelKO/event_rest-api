@@ -1,0 +1,2 @@
+INSERT INTO tb_event (name, description, place) VALUES ('Palestra', 'Palestra sobre IOT', 'Facens');
+INSERT INTO tb_event (name, description, place) VALUES ('Workshop', 'Workshop sobre soft skills', 'Facens');

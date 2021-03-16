@@ -18,7 +18,7 @@ public class EventService {
 
 	public List<EventDTO> getAllEvents() {
 
-		List<Event> list = repository.getAllEvents();
+		List<Event> list = repository.findAll();
 
 		List<EventDTO> listDTO = new ArrayList<>();
 		for (Event event : list) {
