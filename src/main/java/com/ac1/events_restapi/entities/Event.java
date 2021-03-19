@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -56,6 +57,17 @@ public class Event implements Serializable {
 		setStartTime(event.getStartTime());
 		setEndTime(event.getEndTime());
 		setEmail(event.getEmail());
+	}
+
+	public Event(EventInsertDTO insertDto) {
+		this.name = insertDto.getName();
+		this.description = insertDto.getDescription();
+		this.place = insertDto.getPlace();
+		this.startDate = insertDto.getStartDate();
+		this.endDate = insertDto.getEndDate();
+		this.startTime = insertDto.getStartTime();
+		this.endTime = insertDto.getEndTime();
+		this.email = insertDto.getEmail();
 	}
 
 	public Long getId() {

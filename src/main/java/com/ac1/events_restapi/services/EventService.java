@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ac1.events_restapi.dto.EventDTO;
+import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.entities.Event;
 import com.ac1.events_restapi.repositories.EventRepository;
 
@@ -37,5 +38,11 @@ public class EventService {
 		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
 
 		return new Event(event);
+	}
+
+	public Event insert(EventInsertDTO insertDto) {
+		Event entity = new Event(insertDto);
+		entity = repository.save(entity);
+		return new Event(entity);
 	}
 }
