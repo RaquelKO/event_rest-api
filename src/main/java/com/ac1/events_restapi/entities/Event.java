@@ -42,6 +42,22 @@ public class Event implements Serializable {
 
 	private String email;
 
+	public Event() {
+
+	}
+
+	public Event(Event event) {
+		setId(event.getId());
+		setName(event.getName());
+		setDescription(event.getDescription());
+		setPlace(event.getPlace());
+		setStartDate(event.getStartDate());
+		setEndDate(event.getEndDate());
+		setStartTime(event.getStartTime());
+		setEndTime(event.getEndTime());
+		setEmail(event.getEmail());
+	}
+
 	public Long getId() {
 		return id;
 	}
