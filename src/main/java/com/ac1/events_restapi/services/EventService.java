@@ -1,7 +1,5 @@
 package com.ac1.events_restapi.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +12,8 @@ import com.ac1.events_restapi.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,16 +24,10 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
-	public List<EventDTO> getAllEvents() {
+	public Page<EventDTO> getAllEvents(PageRequest pageRequest) {
 
-		List<Event> list = repository.findAll();
-
-		List<EventDTO> listDTO = new ArrayList<>();
-		for (Event event : list) {
-			listDTO.add(new EventDTO(event.getId(), event.getName()));
-		}
-
-		return listDTO;
+		Page<Event> list = repository.find(pageRequest);
+		return list.map(e -> new EventDTO(e));
 	}
 
 	public Event getEventById(Long id) {

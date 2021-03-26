@@ -1,5 +1,7 @@
 package com.ac1.events_restapi.dto;
 
+import com.ac1.events_restapi.entities.Event;
+
 public class EventDTO {
 	private Long id;
 	private String name;
@@ -11,6 +13,11 @@ public class EventDTO {
 	public EventDTO(Long id, String name) {
 		setId(id);
 		setName(name);
+	}
+
+	public EventDTO(Event event) {
+		setId(event.getId());
+		setName(event.getName());
 	}
 
 	public Long getId() {

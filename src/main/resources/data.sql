@@ -1,2 +1,12 @@
-INSERT INTO tb_event (name, description, place) VALUES ('Palestra', 'Palestra sobre IOT', 'Facens');
+INSERT INTO tb_event (name, description, place) VALUES ('Palestra', 'Palestra sobre IOT', 'Auditorio');
 INSERT INTO tb_event (name, description, place) VALUES ('Workshop', 'Workshop sobre soft skills', 'Facens');
+INSERT INTO tb_event (name, description, place) VALUES ('Congresso', 'X Congresso sobre Engenharia de Computacao', 'Predio B');
+INSERT INTO tb_event (name, description, place) VALUES ('TecnoFacens', 'TecnoFacens 2021', 'Facens');
+INSERT INTO tb_event (name, description, place) VALUES ('Palestra', 'Palestra sobre Data Science', 'Auditorio');
+INSERT INTO tb_event (name, description, place) VALUES ('Workshop', 'Workshop sobre IOT', 'FabLab');
+INSERT INTO tb_event (name, description, place) VALUES ('Congresso', 'XI Congresso sobre Engenharia de Computacao', 'Ginasio');
+INSERT INTO tb_event (name, description, place) VALUES ('TecnoFacens', 'TecnoFacens 2022', 'Facens');
+INSERT INTO tb_event (name, description, place) VALUES ('Palestra', 'Palestra sobre IA', 'Auditorio');
+INSERT INTO tb_event (name, description, place) VALUES ('Workshop', 'Workshop sobre Drones', 'FabLab');
+INSERT INTO tb_event (name, description, place) VALUES ('Congresso', 'XII Congresso sobre Engenharia de Computacao', 'Predio C');
+INSERT INTO tb_event (name, description, place) VALUES ('TecnoFacens', 'TecnoFacens 2023', 'Facens');
