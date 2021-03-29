@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.EventInsertDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "TB_EVENT")
@@ -29,16 +29,16 @@ public class Event implements Serializable {
 
 	private String place;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	// @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	// @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
 
-	@JsonFormat(pattern = "HH:mm:ss")
+	// @JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime startTime;
 
-	@JsonFormat(pattern = "HH:mm:ss")
+	// @JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
 	private String email;

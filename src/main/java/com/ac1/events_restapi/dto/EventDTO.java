@@ -3,7 +3,7 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 
 import com.ac1.events_restapi.entities.Event;
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDTO {
 	private Long id;
@@ -11,7 +11,7 @@ public class EventDTO {
 	private String description;
 	private String place;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	// @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
 
 	public EventDTO() {

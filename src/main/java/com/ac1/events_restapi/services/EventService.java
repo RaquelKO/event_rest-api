@@ -1,5 +1,6 @@
 package com.ac1.events_restapi.services;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,9 +25,16 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
-	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String place) {
+	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String place,
+			LocalDate startDate) {
 
-		Page<Event> list = repository.find(pageRequest, name, description, place);
+		Page<Event> list = repository.find(pageRequest, name, description, place, startDate);
+		return list.map(e -> new EventDTO(e));
+	}
+
+	public Page<EventDTO> getAllEventsButDate(PageRequest pageRequest, String name, String description, String place) {
+
+		Page<Event> list = repository.findNoDate(pageRequest, name, description, place);
 		return list.map(e -> new EventDTO(e));
 	}
 

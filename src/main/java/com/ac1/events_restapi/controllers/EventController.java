@@ -1,6 +1,8 @@
 package com.ac1.events_restapi.controllers;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
@@ -40,11 +42,23 @@ public class EventController {
 			@RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
 			@RequestParam(value = "name", defaultValue = "") String name,
 			@RequestParam(value = "description", defaultValue = "") String description,
-			@RequestParam(value = "place", defaultValue = "") String place) {
+			@RequestParam(value = "place", defaultValue = "") String place,
+			@RequestParam(value = "startDate", defaultValue = "") String date) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 
-		Page<EventDTO> list = service.getAllEvents(pageRequest, name, description, place);
-		return ResponseEntity.ok().body(list);
+		if (date.isEmpty()) {
+
+			Page<EventDTO> list = service.getAllEventsButDate(pageRequest, name, description, place);
+			return ResponseEntity.ok().body(list);
+
+		} else {
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate startDate = LocalDate.parse(date, formatter);
+
+			Page<EventDTO> list = service.getAllEvents(pageRequest, name, description, place, startDate);
+			return ResponseEntity.ok().body(list);
+		}
 	}
 
 	@GetMapping("{id}")
