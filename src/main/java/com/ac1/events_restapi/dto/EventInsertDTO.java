@@ -3,26 +3,14 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-//import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class EventInsertDTO {
 
 	private String name;
-
 	private String description;
-
 	private String place;
-
-	// @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
-
-	// @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
-
-	// @JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime startTime;
-
-	// @JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
 	private String email;

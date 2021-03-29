@@ -44,6 +44,7 @@ public class EventController {
 			@RequestParam(value = "description", defaultValue = "") String description,
 			@RequestParam(value = "place", defaultValue = "") String place,
 			@RequestParam(value = "startDate", defaultValue = "") String date) {
+
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 
 		if (date.isEmpty()) {
