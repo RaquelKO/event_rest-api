@@ -3,24 +3,27 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 
 import com.ac1.events_restapi.entities.Event;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDTO {
 	private Long id;
 	private String name;
 	private String description;
 	private String place;
-	private LocalDate startDate;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate date;
 
 	public EventDTO() {
 
 	}
 
-	public EventDTO(Long id, String name, String description, String place, LocalDate startDate) {
+	public EventDTO(Long id, String name, String description, String place, LocalDate date) {
 		setId(id);
 		setName(name);
 		setDescription(description);
 		setPlace(place);
-		setStartDate(startDate);
+		setDate(date);
 	}
 
 	public EventDTO(Event event) {
@@ -28,7 +31,7 @@ public class EventDTO {
 		setName(event.getName());
 		setDescription(event.getDescription());
 		setPlace(event.getPlace());
-		setStartDate(event.getStartDate());
+		setDate(event.getDate());
 	}
 
 	public Long getId() {
@@ -63,12 +66,12 @@ public class EventDTO {
 		this.place = place;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 }

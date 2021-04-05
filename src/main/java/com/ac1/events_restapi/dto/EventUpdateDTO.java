@@ -3,12 +3,22 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class EventUpdateDTO {
 
 	private String place;
-	private LocalDate startDate;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate date;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
-	private LocalTime startTime;
+
+	@JsonFormat(pattern = "HH:mm:ss")
+	private LocalTime time;
+
+	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
 	public String getPlace() {
@@ -19,12 +29,12 @@ public class EventUpdateDTO {
 		this.place = place;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 	public LocalDate getEndDate() {
@@ -35,12 +45,12 @@ public class EventUpdateDTO {
 		this.endDate = endDate;
 	}
 
-	public LocalTime getStartTime() {
-		return startTime;
+	public LocalTime getTime() {
+		return time;
 	}
 
-	public void setStartTime(LocalTime startTime) {
-		this.startTime = startTime;
+	public void setTime(LocalTime time) {
+		this.time = time;
 	}
 
 	public LocalTime getEndTime() {

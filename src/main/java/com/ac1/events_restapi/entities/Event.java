@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.EventInsertDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "TB_EVENT")
@@ -25,10 +26,19 @@ public class Event implements Serializable {
 	private String name;
 	private String description;
 	private String place;
-	private LocalDate startDate;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate date;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
-	private LocalTime startTime;
+
+	@JsonFormat(pattern = "HH:mm:ss")
+	private LocalTime time;
+
+	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
+
 	private String email;
 
 	public Event() {
@@ -40,9 +50,9 @@ public class Event implements Serializable {
 		setName(event.getName());
 		setDescription(event.getDescription());
 		setPlace(event.getPlace());
-		setStartDate(event.getStartDate());
+		setDate(event.getDate());
 		setEndDate(event.getEndDate());
-		setStartTime(event.getStartTime());
+		setTime(event.getTime());
 		setEndTime(event.getEndTime());
 		setEmail(event.getEmail());
 	}
@@ -51,9 +61,9 @@ public class Event implements Serializable {
 		this.name = insertDto.getName();
 		this.description = insertDto.getDescription();
 		this.place = insertDto.getPlace();
-		this.startDate = insertDto.getStartDate();
+		this.date = insertDto.getDate();
 		this.endDate = insertDto.getEndDate();
-		this.startTime = insertDto.getStartTime();
+		this.time = insertDto.getTime();
 		this.endTime = insertDto.getEndTime();
 		this.email = insertDto.getEmail();
 	}
@@ -90,12 +100,12 @@ public class Event implements Serializable {
 		this.place = place;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 	public LocalDate getEndDate() {
@@ -106,12 +116,12 @@ public class Event implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public LocalTime getStartTime() {
-		return startTime;
+	public LocalTime getTime() {
+		return time;
 	}
 
-	public void setStartTime(LocalTime startTime) {
-		this.startTime = startTime;
+	public void setTime(LocalTime time) {
+		this.time = time;
 	}
 
 	public LocalTime getEndTime() {
