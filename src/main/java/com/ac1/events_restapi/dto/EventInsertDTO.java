@@ -12,13 +12,13 @@ public class EventInsertDTO {
 	private String place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate date;
+	private LocalDate startDate;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
 
 	@JsonFormat(pattern = "HH:mm:ss")
-	private LocalTime time;
+	private LocalTime startTime;
 
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
@@ -49,12 +49,12 @@ public class EventInsertDTO {
 		this.place = place;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
 	public LocalDate getEndDate() {
@@ -65,12 +65,12 @@ public class EventInsertDTO {
 		this.endDate = endDate;
 	}
 
-	public LocalTime getTime() {
-		return time;
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public void setTime(LocalTime time) {
-		this.time = time;
+	public void setTime(LocalTime startTime) {
+		this.startTime = startTime;
 	}
 
 	public LocalTime getEndTime() {

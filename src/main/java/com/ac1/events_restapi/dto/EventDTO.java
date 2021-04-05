@@ -12,18 +12,18 @@ public class EventDTO {
 	private String place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate date;
+	private LocalDate startDate;
 
 	public EventDTO() {
 
 	}
 
-	public EventDTO(Long id, String name, String description, String place, LocalDate date) {
+	public EventDTO(Long id, String name, String description, String place, LocalDate startDate) {
 		setId(id);
 		setName(name);
 		setDescription(description);
 		setPlace(place);
-		setDate(date);
+		setStartDate(startDate);
 	}
 
 	public EventDTO(Event event) {
@@ -31,7 +31,7 @@ public class EventDTO {
 		setName(event.getName());
 		setDescription(event.getDescription());
 		setPlace(event.getPlace());
-		setDate(event.getDate());
+		setStartDate(event.getStartDate());
 	}
 
 	public Long getId() {
@@ -66,12 +66,12 @@ public class EventDTO {
 		this.place = place;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
 }

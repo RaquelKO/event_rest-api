@@ -41,18 +41,18 @@ public class EventController {
 			@RequestParam(value = "name", defaultValue = "") String name,
 			@RequestParam(value = "description", defaultValue = "") String description,
 			@RequestParam(value = "place", defaultValue = "") String place,
-			@RequestParam(value = "date", defaultValue = "") String datestr) {
+			@RequestParam(value = "startDate", defaultValue = "") String startDate) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 
-		if (datestr.isEmpty()) {
+		if (startDate.isEmpty()) {
 
 			Page<EventDTO> list = service.getAllEventsButDate(pageRequest, name, description, place);
 			return ResponseEntity.ok().body(list);
 
 		} else {
 
-			Page<EventDTO> list = service.getAllEvents(pageRequest, name, description, place, datestr);
+			Page<EventDTO> list = service.getAllEvents(pageRequest, name, description, place, startDate);
 			return ResponseEntity.ok().body(list);
 		}
 

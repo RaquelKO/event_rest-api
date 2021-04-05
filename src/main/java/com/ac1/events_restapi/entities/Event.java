@@ -28,13 +28,13 @@ public class Event implements Serializable {
 	private String place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate date;
+	private LocalDate startDate;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
 
 	@JsonFormat(pattern = "HH:mm:ss")
-	private LocalTime time;
+	private LocalTime startTime;
 
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
@@ -50,9 +50,9 @@ public class Event implements Serializable {
 		setName(event.getName());
 		setDescription(event.getDescription());
 		setPlace(event.getPlace());
-		setDate(event.getDate());
+		setStartDate(event.getStartDate());
 		setEndDate(event.getEndDate());
-		setTime(event.getTime());
+		setStartTime(event.getStartTime());
 		setEndTime(event.getEndTime());
 		setEmail(event.getEmail());
 	}
@@ -61,9 +61,9 @@ public class Event implements Serializable {
 		this.name = insertDto.getName();
 		this.description = insertDto.getDescription();
 		this.place = insertDto.getPlace();
-		this.date = insertDto.getDate();
+		this.startDate = insertDto.getStartDate();
 		this.endDate = insertDto.getEndDate();
-		this.time = insertDto.getTime();
+		this.startTime = insertDto.getStartTime();
 		this.endTime = insertDto.getEndTime();
 		this.email = insertDto.getEmail();
 	}
@@ -100,12 +100,12 @@ public class Event implements Serializable {
 		this.place = place;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
 	public LocalDate getEndDate() {
@@ -116,12 +116,12 @@ public class Event implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public LocalTime getTime() {
-		return time;
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public void setTime(LocalTime time) {
-		this.time = time;
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
 	}
 
 	public LocalTime getEndTime() {

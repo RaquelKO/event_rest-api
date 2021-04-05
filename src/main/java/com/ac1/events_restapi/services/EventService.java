@@ -25,9 +25,9 @@ public class EventService {
 	private EventRepository repository;
 
 	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String place,
-			String dates) {
+			String startDate) {
 
-		Page<Event> list = repository.find(pageRequest, name, description, place, dates);
+		Page<Event> list = repository.find(pageRequest, name, description, place, startDate);
 		return list.map(e -> new EventDTO(e));
 	}
 
@@ -57,9 +57,9 @@ public class EventService {
 			Event entity = repository.getOne(id);
 
 			entity.setPlace(updateDto.getPlace());
-			entity.setDate(updateDto.getDate());
+			entity.setStartDate(updateDto.getStartDate());
 			entity.setEndDate(updateDto.getEndDate());
-			entity.setTime(updateDto.getTime());
+			entity.setStartTime(updateDto.getStartTime());
 			entity.setEndTime(updateDto.getEndTime());
 
 			entity = repository.save(entity);
