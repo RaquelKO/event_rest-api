@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.ac1.events_restapi.dto.AttendInsertDTO;
+
 @Entity
 @Table(name = "TB_ATTEND")
 @PrimaryKeyJoinColumn(name = "USER_ID")
@@ -31,6 +33,12 @@ public class Attend extends BaseUser {
 		setName(attend.getName());
 		setEmail(attend.getEmail());
 		setBalance(attend.getBalance());
+	}
+
+	public Attend(AttendInsertDTO attendInsertDTO) {
+		super.setName(attendInsertDTO.getName());
+		super.setEmail(attendInsertDTO.getEmail());
+		this.balance = attendInsertDTO.getBalance();
 	}
 
 	public Double getBalance() {
