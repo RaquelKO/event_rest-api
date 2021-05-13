@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.PlaceInsertDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_PLACE")
@@ -26,6 +27,7 @@ public class Place implements Serializable {
 	private String name;
 	private String address;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "places")
 	private List<Event> events = new ArrayList<>();
 

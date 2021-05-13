@@ -9,6 +9,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.AdminInsertDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_ADMIN")
@@ -17,6 +18,7 @@ public class Admin extends BaseUser {
 
 	private String phoneNumber;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "admin")
 	private List<Event> events = new ArrayList<>();
 
