@@ -1,16 +1,31 @@
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Palestra', 'Palestra sobre IOT', 'Auditorio', '2021-01-21');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Workshop', 'Workshop sobre soft skills', 'Facens', '2021-08-20');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Congresso', 'X Congresso sobre Engenharia de Computacao', 'Predio B', '2021-01-10');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2021', 'Facens', '2021-10-12');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Palestra', 'Palestra sobre Data Science', 'Auditorio', '2021-04-19');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Workshop', 'Workshop sobre IOT', 'FabLab', '2021-08-20');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Congresso', 'XI Congresso sobre Engenharia de Computacao', 'Ginasio', '2022-01-10');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2022', 'Facens', '2022-10-12');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Palestra', 'Palestra sobre IA', 'Auditorio', '2021-04-19');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Workshop', 'Workshop sobre Drones', 'FabLab', '2021-08-20');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('Congresso', 'XII Congresso sobre Engenharia de Computacao', 'Predio C', '2023-01-10');
--- INSERT INTO tb_event (name, description, place, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2023', 'Facens', '2023-10-12');
+INSERT INTO tb_base_user(name, email) VALUES ('Ana', 'ana@email.com');
+INSERT INTO tb_base_user(name, email) VALUES ('João', 'joao@email.com');
+INSERT INTO tb_base_user(name, email) VALUES ('Maria', 'maria@email.com');
+INSERT INTO tb_base_user(name, email) VALUES ('Carlos', 'carlos@email.com');
+INSERT INTO tb_base_user(name, email) VALUES ('Luiza', 'luiza@email.com');
+INSERT INTO tb_base_user(name, email) VALUES ('Ruth', 'ruth@email.com');
 
-INSERT INTO tb_event (name, description, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2023', '2023-10-12');
-INSERT INTO tb_event (name, description, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2022', '2022-10-12');
-INSERT INTO tb_event (name, description, start_date) VALUES ('TecnoFacens', 'TecnoFacens 2021', '2021-10-12');
+INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3222-3333', 1);
+INSERT INTO tb_admin(phone_number, user_id) VALUES ('(11)9999-5555', 2);
+INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3333-4444', 3);
+
+INSERT INTO tb_attend(balance, user_id) VALUES (7.5, 4);
+INSERT INTO tb_attend(balance, user_id) VALUES (15.0, 5);
+INSERT INTO tb_attend(balance, user_id) VALUES (0.0, 6);
+
+INSERT INTO tb_place(name, address) VALUES ('Auditório', 'Rua X, 123');
+INSERT INTO tb_place(name, address) VALUES ('FabLab', 'Rua ABC, 99');
+INSERT INTO tb_place(name, address) VALUES ('Universidade', 'Rua Universidade, 123');
+
+INSERT INTO tb_event (name, description, start_date, end_date, start_time, end_time, email_contact, amount_free_tickets, amount_payed_tickets, price_ticket, event_admin_id) VALUES ('Palestra', 'Palestra sobre soft skills', '2023-10-12', '2023-10-12', '20:30:00', '21:30:00', 'palestra@email.com', 100, 0, 0.0, 1);
+INSERT INTO tb_event (name, description, start_date, end_date, start_time, end_time, email_contact, amount_free_tickets, amount_payed_tickets, price_ticket, event_admin_id) VALUES ('Workshop', 'Workshop sobre IOT', '2021-05-08', '2021-05-12', '14:30:00', '16:30:00', 'workshop@email.com', 0, 50, 49.9, 2);
+INSERT INTO tb_event (name, description, start_date, end_date, start_time, end_time, email_contact, amount_free_tickets, amount_payed_tickets, price_ticket, event_admin_id) VALUES ('Congresso', 'XI Congresso Data Science', '2022-03-25', '2022-04-20', '08:00:00', '20:00:00', 'congresso@email.com', 100, 1000, 120.0, 3);
+
+INSERT INTO tb_event_places(events_id, places_id) VALUES (1,1);
+INSERT INTO tb_event_places(events_id, places_id) VALUES (2,2);
+INSERT INTO tb_event_places(events_id, places_id) VALUES (3,3);
+
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2023-10-01', 0.0, 1, 4);
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2021-05-07', 49.9, 2, 5);
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2022-03-24', 120.0, 3, 6);
+--type
