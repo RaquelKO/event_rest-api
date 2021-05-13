@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.ac1.events_restapi.dto.PlaceInsertDTO;
+
 @Entity
 @Table(name = "TB_PLACE")
 public class Place implements Serializable {
@@ -37,9 +39,9 @@ public class Place implements Serializable {
 		setAddress(place.getAddress());
 	}
 
-	public Place(String name, String address) {
-		this.name = name;
-		this.address = address;
+	public Place(PlaceInsertDTO placeInsertDTO) {
+		this.name = placeInsertDTO.getName();
+		this.address = placeInsertDTO.getAddress();
 	}
 
 	public Long getId() {
