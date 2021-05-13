@@ -3,11 +3,19 @@ package com.ac1.events_restapi.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.EventInsertDTO;
@@ -25,7 +33,6 @@ public class Event implements Serializable {
 
 	private String name;
 	private String description;
-	private String place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
@@ -39,7 +46,21 @@ public class Event implements Serializable {
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
-	private String email;
+	private String emailContact;
+	private Long amountFreeTickets;
+	private Long amountPayedTickets;
+	private Double priceTicket;
+
+	@ManyToMany
+	private List<Place> places = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "EVENT_ADMIN_ID")
+	private Admin admin;
+
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name = "EVENT_ID")
+	private List<Ticket> tickets = new ArrayList<>();
 
 	public Event() {
 
@@ -49,23 +70,32 @@ public class Event implements Serializable {
 		setId(event.getId());
 		setName(event.getName());
 		setDescription(event.getDescription());
-		setPlace(event.getPlace());
 		setStartDate(event.getStartDate());
 		setEndDate(event.getEndDate());
 		setStartTime(event.getStartTime());
 		setEndTime(event.getEndTime());
-		setEmail(event.getEmail());
+		setEmailContact(event.getEmailContact());
+		setAmountFreeTickets(event.getAmountFreeTickets());
+		setAmountPayedTickets(event.getAmountPayedTickets());
+		// addPlace(event.getPlaces().get(0));
+		setPriceTicket(event.getPriceTicket());
+		setAdmin(event.getAdmin());
 	}
 
 	public Event(EventInsertDTO insertDto) {
 		this.name = insertDto.getName();
 		this.description = insertDto.getDescription();
-		this.place = insertDto.getPlace();
 		this.startDate = insertDto.getStartDate();
 		this.endDate = insertDto.getEndDate();
 		this.startTime = insertDto.getStartTime();
 		this.endTime = insertDto.getEndTime();
-		this.email = insertDto.getEmail();
+		this.emailContact = insertDto.getEmailContact();
+		this.amountFreeTickets = insertDto.getAmountFreeTickets();
+		this.amountPayedTickets = insertDto.getAmountPayedTickets();
+		this.priceTicket = insertDto.getPriceTicket();
+		this.places = insertDto.getPlaces();
+		this.admin = insertDto.getAdmin();
+		this.tickets = insertDto.getTickets();
 	}
 
 	public Long getId() {
@@ -90,14 +120,6 @@ public class Event implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
 	}
 
 	public LocalDate getStartDate() {
@@ -132,12 +154,52 @@ public class Event implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailContact() {
+		return emailContact;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailContact(String emailContact) {
+		this.emailContact = emailContact;
+	}
+
+	public Long getAmountFreeTickets() {
+		return amountFreeTickets;
+	}
+
+	public void setAmountFreeTickets(Long amountFreeTickets) {
+		this.amountFreeTickets = amountFreeTickets;
+	}
+
+	public Long getAmountPayedTickets() {
+		return amountPayedTickets;
+	}
+
+	public void setAmountPayedTickets(Long amountPayedTickets) {
+		this.amountPayedTickets = amountPayedTickets;
+	}
+
+	public Double getPriceTicket() {
+		return priceTicket;
+	}
+
+	public void setPriceTicket(Double priceTicket) {
+		this.priceTicket = priceTicket;
+	}
+
+	public List<Place> getPlaces() {
+		return places;
+	}
+
+	public void addPlace(Place place) {
+		this.places.add(place);
+	}
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 	@Override
