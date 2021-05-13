@@ -64,8 +64,13 @@ public class EventService {
 			entity.setStartTime(updateDto.getStartTime());
 			entity.setEndTime(updateDto.getEndTime());
 
-			entity = repository.save(entity);
-			return new Event(entity);
+			if (updateDto.getStartDate().compareTo(updateDto.getEndDate()) > 0) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The end date must be after the start date!");
+			} else {
+				entity = repository.save(entity);
+				return new Event(entity);
+			}
+
 		} catch (EntityNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
