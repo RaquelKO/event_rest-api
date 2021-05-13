@@ -24,16 +24,15 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
-	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String place,
-			String startDate) {
+	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String startDate) {
 
-		Page<Event> list = repository.find(pageRequest, name, description, place, startDate);
+		Page<Event> list = repository.find(pageRequest, name, description, startDate);
 		return list.map(e -> new EventDTO(e));
 	}
 
-	public Page<EventDTO> getAllEventsButDate(PageRequest pageRequest, String name, String description, String place) {
+	public Page<EventDTO> getAllEventsButDate(PageRequest pageRequest, String name, String description) {
 
-		Page<Event> list = repository.findNoDate(pageRequest, name, description, place);
+		Page<Event> list = repository.findNoDate(pageRequest, name, description);
 		return list.map(e -> new EventDTO(e));
 	}
 
@@ -45,18 +44,21 @@ public class EventService {
 		return new Event(event);
 	}
 
-	public Event insert(EventInsertDTO insertDto) {
+	public Event insert(EventInsertDTO eventInsertDTO) {
 
-		Event entity = new Event(insertDto);
-		entity = repository.save(entity);
-		return new Event(entity);
+		if (eventInsertDTO.getStartDate().compareTo(eventInsertDTO.getEndDate()) > 0) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The end date must be after the start date!");
+		} else {
+			Event entity = new Event(eventInsertDTO);
+			entity = repository.save(entity);
+			return new Event(entity);
+		}
 	}
 
 	public Event update(Long id, EventUpdateDTO updateDto) {
 		try {
 			Event entity = repository.getOne(id);
-
-			entity.setPlace(updateDto.getPlace());
+			entity.addPlace(updateDto.getPlace());
 			entity.setStartDate(updateDto.getStartDate());
 			entity.setEndDate(updateDto.getEndDate());
 			entity.setStartTime(updateDto.getStartTime());
