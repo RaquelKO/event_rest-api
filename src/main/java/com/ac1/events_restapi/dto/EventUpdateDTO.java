@@ -3,11 +3,12 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.ac1.events_restapi.entities.Place;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventUpdateDTO {
 
-	private String place;
+	private Place place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
@@ -21,11 +22,11 @@ public class EventUpdateDTO {
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
-	public String getPlace() {
+	public Place getPlace() {
 		return place;
 	}
 
-	public void setPlace(String place) {
+	public void setPlace(Place place) {
 		this.place = place;
 	}
 

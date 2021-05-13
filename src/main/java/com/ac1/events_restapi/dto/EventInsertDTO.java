@@ -2,14 +2,19 @@ package com.ac1.events_restapi.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.ac1.events_restapi.entities.Admin;
+import com.ac1.events_restapi.entities.Place;
+import com.ac1.events_restapi.entities.Ticket;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventInsertDTO {
 
 	private String name;
 	private String description;
-	private String place;
+	private Place place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
@@ -23,7 +28,13 @@ public class EventInsertDTO {
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
-	private String email;
+	private String emailContact;
+	private Long amountFreeTickets;
+	private Long amountPayedTickets;
+	private Double priceTicket;
+	private List<Place> places = new ArrayList<>();
+	private Admin admin;
+	private List<Ticket> tickets = new ArrayList<>();
 
 	public String getName() {
 		return name;
@@ -41,11 +52,11 @@ public class EventInsertDTO {
 		this.description = description;
 	}
 
-	public String getPlace() {
+	public Place getPlace() {
 		return place;
 	}
 
-	public void setPlace(String place) {
+	public void setPlace(Place place) {
 		this.place = place;
 	}
 
@@ -65,6 +76,10 @@ public class EventInsertDTO {
 		this.endDate = endDate;
 	}
 
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
+	}
+
 	public LocalTime getStartTime() {
 		return startTime;
 	}
@@ -81,12 +96,60 @@ public class EventInsertDTO {
 		this.endTime = endTime;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailContact() {
+		return emailContact;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailContact(String emailContact) {
+		this.emailContact = emailContact;
+	}
+
+	public Long getAmountFreeTickets() {
+		return amountFreeTickets;
+	}
+
+	public void setAmountFreeTickets(Long amountFreeTickets) {
+		this.amountFreeTickets = amountFreeTickets;
+	}
+
+	public Long getAmountPayedTickets() {
+		return amountPayedTickets;
+	}
+
+	public void setAmountPayedTickets(Long amountPayedTickets) {
+		this.amountPayedTickets = amountPayedTickets;
+	}
+
+	public Double getPriceTicket() {
+		return priceTicket;
+	}
+
+	public void setPriceTicket(Double priceTicket) {
+		this.priceTicket = priceTicket;
+	}
+
+	public List<Place> getPlaces() {
+		return places;
+	}
+
+	public void addPlace(Place place) {
+		this.places.add(place);
+	}
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
 	}
 
 }
