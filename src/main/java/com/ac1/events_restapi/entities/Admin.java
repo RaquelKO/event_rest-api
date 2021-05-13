@@ -35,7 +35,6 @@ public class Admin extends BaseUser {
 		super.setName(adminInsertDTO.getName());
 		super.setEmail(adminInsertDTO.getEmail());
 		this.phoneNumber = adminInsertDTO.getPhoneNumber();
-		this.events = adminInsertDTO.getEvents();
 	}
 
 	public String getPhoneNumber() {

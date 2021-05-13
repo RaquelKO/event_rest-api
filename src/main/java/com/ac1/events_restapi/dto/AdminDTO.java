@@ -7,7 +7,6 @@ public class AdminDTO {
 	private String name;
 	private String email;
 	private String phoneNumber;
-	// private List<Event> events = new ArrayList<>();
 
 	public AdminDTO() {
 
