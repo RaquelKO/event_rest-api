@@ -25,7 +25,6 @@ INSERT INTO tb_event_places(events_id, places_id) VALUES (1,1);
 INSERT INTO tb_event_places(events_id, places_id) VALUES (2,2);
 INSERT INTO tb_event_places(events_id, places_id) VALUES (3,3);
 
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2023-10-01', 0.0, 1, 4);
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2021-05-07', 49.9, 2, 5);
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id) VALUES ('2022-03-24', 120.0, 3, 6);
---type
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2023-10-01', 0.0, 1, 4, 0);
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2021-05-07', 49.9, 2, 5, 1);
+INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2022-03-24', 120.0, 3, 6, 1);
