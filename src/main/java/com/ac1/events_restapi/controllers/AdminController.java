@@ -3,6 +3,8 @@ package com.ac1.events_restapi.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.ac1.events_restapi.dto.AdminDTO;
 import com.ac1.events_restapi.dto.AdminInsertDTO;
 import com.ac1.events_restapi.dto.AdminUpdateDTO;
@@ -41,14 +43,14 @@ public class AdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Admin> insert(@RequestBody AdminInsertDTO adminInsertDTO) {
+	public ResponseEntity<Admin> insert(@Valid @RequestBody AdminInsertDTO adminInsertDTO) {
 		Admin dto = adminService.insert(adminInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Admin> update(@RequestBody AdminUpdateDTO adminUpdateDto, @PathVariable Long id) {
+	public ResponseEntity<Admin> update(@Valid @RequestBody AdminUpdateDTO adminUpdateDto, @PathVariable Long id) {
 		Admin dto = adminService.update(id, adminUpdateDto);
 		return ResponseEntity.ok().body(dto);
 	}

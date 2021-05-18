@@ -3,6 +3,8 @@ package com.ac1.events_restapi.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.ac1.events_restapi.dto.PlaceDTO;
 import com.ac1.events_restapi.dto.PlaceInsertDTO;
 import com.ac1.events_restapi.dto.PlaceUpdateDTO;
@@ -41,14 +43,14 @@ public class PlaceController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Place> insert(@RequestBody PlaceInsertDTO placeInsertDTO) {
+	public ResponseEntity<Place> insert(@Valid @RequestBody PlaceInsertDTO placeInsertDTO) {
 		Place dto = placeService.insert(placeInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Place> update(@RequestBody PlaceUpdateDTO placeUpdateDto, @PathVariable Long id) {
+	public ResponseEntity<Place> update(@Valid @RequestBody PlaceUpdateDTO placeUpdateDto, @PathVariable Long id) {
 		Place dto = placeService.update(id, placeUpdateDto);
 		return ResponseEntity.ok().body(dto);
 	}

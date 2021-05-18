@@ -3,6 +3,8 @@ package com.ac1.events_restapi.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.ac1.events_restapi.dto.AttendeeDTO;
 import com.ac1.events_restapi.dto.AttendeeInsertDTO;
 import com.ac1.events_restapi.dto.AttendeeUpdateDTO;
@@ -41,14 +43,15 @@ public class AttendeeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Attendee> insert(@RequestBody AttendeeInsertDTO attendeeInsertDTO) {
+	public ResponseEntity<Attendee> insert(@Valid @RequestBody AttendeeInsertDTO attendeeInsertDTO) {
 		Attendee dto = attendeeService.insert(attendeeInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Attendee> update(@RequestBody AttendeeUpdateDTO attendeeUpdateDto, @PathVariable Long id) {
+	public ResponseEntity<Attendee> update(@Valid @RequestBody AttendeeUpdateDTO attendeeUpdateDto,
+			@PathVariable Long id) {
 		Attendee dto = attendeeService.update(id, attendeeUpdateDto);
 		return ResponseEntity.ok().body(dto);
 	}

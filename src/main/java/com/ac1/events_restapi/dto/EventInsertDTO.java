@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.ac1.events_restapi.entities.Admin;
 import com.ac1.events_restapi.entities.Place;
 import com.ac1.events_restapi.entities.Ticket;
@@ -12,8 +14,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventInsertDTO {
 
+	@NotBlank(message = "This field must not be blank!")
 	private String name;
+
+	@NotBlank(message = "This field must not be blank!")
 	private String description;
+
 	private Place place;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -28,7 +34,9 @@ public class EventInsertDTO {
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
+	@NotBlank(message = "This field must not be blank!")
 	private String emailContact;
+
 	private Long amountFreeTickets;
 	private Long amountPayedTickets;
 	private Double priceTicket;

@@ -1,7 +1,13 @@
 package com.ac1.events_restapi.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class AdminUpdateDTO {
+
+	@NotBlank(message = "This field must not be blank!")
 	private String email;
+
+	@NotBlank(message = "This field must not be blank!")
 	private String phoneNumber;
 
 	public String getEmail() {
