@@ -11,12 +11,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.ac1.events_restapi.dto.AttendInsertDTO;
+import com.ac1.events_restapi.dto.AttendeeInsertDTO;
 
 @Entity
 @Table(name = "TB_ATTEND")
 @PrimaryKeyJoinColumn(name = "USER_ID")
-public class Attend extends BaseUser {
+public class Attendee extends BaseUser {
 
 	private Double balance;
 
@@ -24,18 +24,18 @@ public class Attend extends BaseUser {
 	@JoinColumn(name = "ATTEND_USER_ID")
 	private List<Ticket> tickets = new ArrayList<>();
 
-	public Attend() {
+	public Attendee() {
 
 	}
 
-	public Attend(Attend attend) {
+	public Attendee(Attendee attend) {
 		setId(attend.getId());
 		setName(attend.getName());
 		setEmail(attend.getEmail());
 		setBalance(attend.getBalance());
 	}
 
-	public Attend(AttendInsertDTO attendInsertDTO) {
+	public Attendee(AttendeeInsertDTO attendInsertDTO) {
 		super.setName(attendInsertDTO.getName());
 		super.setEmail(attendInsertDTO.getEmail());
 		this.balance = attendInsertDTO.getBalance();

@@ -1,6 +1,6 @@
 package com.ac1.events_restapi.dto;
 
-public class AttendInsertDTO {
+public class AttendeeInsertDTO {
 	private String name;
 	private String email;
 	private Double balance;

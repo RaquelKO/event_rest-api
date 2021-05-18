@@ -1,33 +1,41 @@
 <h2 align="center">Sistema Gerenciador de Eventos 🎫 Rest API</h1>
-<h4 align="center">Por: Raquel Kuntz Oliveira, RA: 121036</h1>
+<h4 align="center">Por: Amanda Perrone Degrande, RA: 140501 & Raquel Kuntz Oliveira, RA: 121036</h1>
 
 #### 🔗 Deploy: [Heroku](event-rest-api.herokuapp.com/)
 
 #### 💾 JSONs para salvar novas entidades:
+
 - 👤 Admin:
+
 ```
 {
     "name": "Admin Name",
-    "email": "admin@email.br",
+    "email": "admin@email.com",
     "phoneNumber": "1532223333"
 }
 ```
-- 👤 Attend:
+
+- 👤 Attendee:
+
 ```
 {
-    "name": "Attend Name",
-    "email": "attend@emil.br",
+    "name": "Attendee Name",
+    "email": "attend@email.com",
     "balance": 25.0
 }
 ```
+
 - 📌 Place:
+
 ```
 {
     "name": "Place Name",
     "address": "Place Address"
 }
 ```
+
 - 🎫 Event:
+
 ```
 {
     "name": "Event Name",
@@ -36,7 +44,7 @@
     "endDate": "22/04/2021",
     "startTime": "08:00:00",
     "endTime": "10:30:00",
-    "emailContact": "event@email.br",
+    "emailContact": "event@email.com",
     "amountFreeTickets": 20,
     "amountPayedTickets": 100,
     "priceTicket": 15.0,

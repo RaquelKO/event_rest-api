@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.ac1.events_restapi.entities.Ticket;
 
-public class AttendUpdateDTO {
+public class AttendeeUpdateDTO {
 	private String email;
 	private Double balance;
 	private List<Ticket> tickets = new ArrayList<>();

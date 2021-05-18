@@ -1,25 +1,25 @@
 package com.ac1.events_restapi.dto;
 
-import com.ac1.events_restapi.entities.Attend;
+import com.ac1.events_restapi.entities.Attendee;
 
-public class AttendDTO {
+public class AttendeeDTO {
 	private Long id;
 	private String name;
 	private String email;
 	private Double balance;
 
-	public AttendDTO() {
+	public AttendeeDTO() {
 
 	}
 
-	public AttendDTO(Long id, String name, String email, Double balance) {
+	public AttendeeDTO(Long id, String name, String email, Double balance) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.balance = balance;
 	}
 
-	public AttendDTO(Attend attend) {
+	public AttendeeDTO(Attendee attend) {
 		setId(attend.getId());
 		setName(attend.getName());
 		setEmail(attend.getEmail());
