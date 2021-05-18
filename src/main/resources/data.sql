@@ -9,9 +9,9 @@ INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3222-3333', 1);
 INSERT INTO tb_admin(phone_number, user_id) VALUES ('(11)9999-5555', 2);
 INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3333-4444', 3);
 
-INSERT INTO tb_attend(balance, user_id) VALUES (7.5, 4);
-INSERT INTO tb_attend(balance, user_id) VALUES (15.0, 5);
-INSERT INTO tb_attend(balance, user_id) VALUES (0.0, 6);
+INSERT INTO tb_attendee(balance, user_id) VALUES (7.5, 4);
+INSERT INTO tb_attendee(balance, user_id) VALUES (15.0, 5);
+INSERT INTO tb_attendee(balance, user_id) VALUES (0.0, 6);
 
 INSERT INTO tb_place(name, address) VALUES ('Auditório', 'Rua X, 123');
 INSERT INTO tb_place(name, address) VALUES ('FabLab', 'Rua ABC, 99');
@@ -25,6 +25,6 @@ INSERT INTO tb_event_places(events_id, places_id) VALUES (1,1);
 INSERT INTO tb_event_places(events_id, places_id) VALUES (2,2);
 INSERT INTO tb_event_places(events_id, places_id) VALUES (3,3);
 
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2023-10-01', 0.0, 1, 4, 0);
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2021-05-07', 49.9, 2, 5, 1);
-INSERT INTO tb_ticket(date, price, event_id, attend_user_id, type) VALUES ('2022-03-24', 120.0, 3, 6, 1);
+INSERT INTO tb_ticket(date, price, event_id, attendee_user_id, type) VALUES ('2023-10-01', 0.0, 1, 4, 0);
+INSERT INTO tb_ticket(date, price, event_id, attendee_user_id, type) VALUES ('2021-05-07', 49.9, 2, 5, 1);
+INSERT INTO tb_ticket(date, price, event_id, attendee_user_id, type) VALUES ('2022-03-24', 120.0, 3, 6, 1);

@@ -22,40 +22,40 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/attends")
+@RequestMapping("/attendees")
 public class AttendeeController {
 
 	@Autowired
-	private AttendeeService attendService;
+	private AttendeeService attendeeService;
 
 	@GetMapping
 	public ResponseEntity<List<AttendeeDTO>> getAttendees() {
-		List<AttendeeDTO> list = attendService.getAttendees();
+		List<AttendeeDTO> list = attendeeService.getAttendees();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<Attendee> getAttendeeById(@PathVariable Long id) {
-		Attendee event = attendService.getAttendeeById(id);
-		return ResponseEntity.ok().body(event);
+		Attendee attendee = attendeeService.getAttendeeById(id);
+		return ResponseEntity.ok().body(attendee);
 	}
 
 	@PostMapping
-	public ResponseEntity<Attendee> insert(@RequestBody AttendeeInsertDTO attendInsertDTO) {
-		Attendee dto = attendService.insert(attendInsertDTO);
+	public ResponseEntity<Attendee> insert(@RequestBody AttendeeInsertDTO attendeeInsertDTO) {
+		Attendee dto = attendeeService.insert(attendeeInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Attendee> update(@RequestBody AttendeeUpdateDTO attendUpdateDto, @PathVariable Long id) {
-		Attendee dto = attendService.update(id, attendUpdateDto);
+	public ResponseEntity<Attendee> update(@RequestBody AttendeeUpdateDTO attendeeUpdateDto, @PathVariable Long id) {
+		Attendee dto = attendeeService.update(id, attendeeUpdateDto);
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		attendService.delete(id);
+		attendeeService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
