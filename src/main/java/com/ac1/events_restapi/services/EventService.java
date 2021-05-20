@@ -7,7 +7,9 @@ import javax.persistence.EntityNotFoundException;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
+import com.ac1.events_restapi.entities.Admin;
 import com.ac1.events_restapi.entities.Event;
+import com.ac1.events_restapi.repositories.AdminRepository;
 import com.ac1.events_restapi.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class EventService {
 
 	@Autowired
 	private EventRepository repository;
+
+	@Autowired
+	private AdminRepository adminRepository;
 
 	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String startDate) {
 
@@ -49,7 +54,12 @@ public class EventService {
 		if (eventInsertDTO.getStartDate().compareTo(eventInsertDTO.getEndDate()) > 0) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The end date must be after the start date!");
 		} else {
+
+			Optional<Admin> op = adminRepository.findById(eventInsertDTO.getIdAdmin());
+			Admin admin = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found"));
+
 			Event entity = new Event(eventInsertDTO);
+			entity.setAdmin(admin);
 			entity = repository.save(entity);
 			return new Event(entity);
 		}

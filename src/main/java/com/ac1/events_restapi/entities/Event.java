@@ -17,9 +17,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_EVENT")
@@ -58,6 +60,10 @@ public class Event implements Serializable {
 	@JoinColumn(name = "EVENT_ADMIN_ID")
 	private Admin admin;
 
+	@JsonIgnore
+	@Transient
+	private Long idAdmin;
+
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "EVENT_ID")
 	private List<Ticket> tickets = new ArrayList<>();
@@ -94,7 +100,7 @@ public class Event implements Serializable {
 		this.amountPayedTickets = insertDto.getAmountPayedTickets();
 		this.priceTicket = insertDto.getPriceTicket();
 		this.places = insertDto.getPlaces();
-		this.admin = insertDto.getAdmin();
+		this.idAdmin = insertDto.getIdAdmin();
 		this.tickets = insertDto.getTickets();
 	}
 
@@ -200,6 +206,14 @@ public class Event implements Serializable {
 
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
+	}
+
+	public Long getIdAdmin() {
+		return idAdmin;
+	}
+
+	public void setIdAdmin(Long idAdmin) {
+		this.idAdmin = idAdmin;
 	}
 
 	@Override

@@ -48,6 +48,6 @@
     "amountFreeTickets": 20,
     "amountPayedTickets": 100,
     "priceTicket": 15.0,
-    "admin": adminId
+    "idAdmin": 1
 }
 ```

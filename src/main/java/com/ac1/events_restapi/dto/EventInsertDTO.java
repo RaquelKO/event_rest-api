@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import com.ac1.events_restapi.entities.Admin;
 import com.ac1.events_restapi.entities.Place;
 import com.ac1.events_restapi.entities.Ticket;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,7 +40,7 @@ public class EventInsertDTO {
 	private Long amountPayedTickets;
 	private Double priceTicket;
 	private List<Place> places = new ArrayList<>();
-	private Admin admin;
+	private Long idAdmin;
 	private List<Ticket> tickets = new ArrayList<>();
 
 	public String getName() {
@@ -144,12 +143,12 @@ public class EventInsertDTO {
 		this.places.add(place);
 	}
 
-	public Admin getAdmin() {
-		return admin;
+	public Long getIdAdmin() {
+		return idAdmin;
 	}
 
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
+	public void setIdAdmin(Long idAdmin) {
+		this.idAdmin = idAdmin;
 	}
 
 	public List<Ticket> getTickets() {

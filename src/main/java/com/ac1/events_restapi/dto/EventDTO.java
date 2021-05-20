@@ -9,7 +9,6 @@ public class EventDTO {
 	private Long id;
 	private String name;
 	private String description;
-	// private List<Place> places = new ArrayList<>();
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
@@ -23,7 +22,6 @@ public class EventDTO {
 		setName(name);
 		setDescription(description);
 		setStartDate(startDate);
-		// addPlace(place);
 	}
 
 	public EventDTO(Event event) {
@@ -31,7 +29,6 @@ public class EventDTO {
 		setName(event.getName());
 		setDescription(event.getDescription());
 		setStartDate(event.getStartDate());
-		// addPlace(event.getPlaces().get(0));
 	}
 
 	public Long getId() {
