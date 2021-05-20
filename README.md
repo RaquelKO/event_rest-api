@@ -1,7 +1,7 @@
 <h2 align="center">Sistema Gerenciador de Eventos 🎫 Rest API</h1>
 <h4 align="center">Por: Amanda Perrone Degrande, RA: 140501 & Raquel Kuntz Oliveira, RA: 121036</h1>
 
-#### 🔗 Deploy: [Heroku](event-rest-api.herokuapp.com/)
+#### 🔗 Deploy: [Heroku](https://event-rest-api.herokuapp.com/)
 
 #### 💾 JSONs para salvar novas entidades:
 
