@@ -1,7 +1,5 @@
 package com.ac1.events_restapi.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +12,8 @@ import com.ac1.events_restapi.repositories.PlaceRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +24,9 @@ public class PlaceService {
 	@Autowired
 	private PlaceRepository placeRepository;
 
-	public List<PlaceDTO> getPlaces() {
-		List<Place> list = placeRepository.findAll();
-		List<PlaceDTO> listDTO = new ArrayList<>();
-		for (Place place : list) {
-			listDTO.add(new PlaceDTO(place.getId(), place.getName(), place.getAddress()));
-		}
-
-		return listDTO;
+	public Page<PlaceDTO> getPlaces(PageRequest pageRequest) {
+		Page<Place> list = placeRepository.findPlacePageable(pageRequest);
+		return list.map(place -> new PlaceDTO(place));
 	}
 
 	public Place insert(PlaceInsertDTO placeInsertDTO) {

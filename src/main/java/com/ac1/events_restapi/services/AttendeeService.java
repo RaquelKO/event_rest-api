@@ -1,7 +1,5 @@
 package com.ac1.events_restapi.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +12,8 @@ import com.ac1.events_restapi.repositories.AttendeeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +24,9 @@ public class AttendeeService {
 	@Autowired
 	private AttendeeRepository attendRepository;
 
-	public List<AttendeeDTO> getAttendees() {
-		List<Attendee> list = attendRepository.findAll();
-		List<AttendeeDTO> listDTO = new ArrayList<>();
-		for (Attendee attend : list) {
-			listDTO.add(new AttendeeDTO(attend.getId(), attend.getName(), attend.getEmail(), attend.getBalance()));
-		}
-
-		return listDTO;
+	public Page<AttendeeDTO> getAttendees(PageRequest pageRequest) {
+		Page<Attendee> list = attendRepository.findAttendeePageable(pageRequest);
+		return list.map(attendee -> new AttendeeDTO(attendee));
 	}
 
 	public Attendee insert(AttendeeInsertDTO attendInsertDTO) {

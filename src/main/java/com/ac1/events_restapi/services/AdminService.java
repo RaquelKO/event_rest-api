@@ -1,7 +1,5 @@
 package com.ac1.events_restapi.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +12,8 @@ import com.ac1.events_restapi.repositories.AdminRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +24,9 @@ public class AdminService {
 	@Autowired
 	private AdminRepository adminRepository;
 
-	public List<AdminDTO> getAdmins() {
-		List<Admin> list = adminRepository.findAll();
-		List<AdminDTO> listDTO = new ArrayList<>();
-		for (Admin admin : list) {
-			listDTO.add(new AdminDTO(admin.getId(), admin.getName(), admin.getEmail(), admin.getPhoneNumber()));
-		}
-
-		return listDTO;
+	public Page<AdminDTO> getAdmins(PageRequest pageRequest) {
+		Page<Admin> list = adminRepository.findAdminPageable(pageRequest);
+		return list.map(admin -> new AdminDTO(admin));
 	}
 
 	public Admin insert(AdminInsertDTO adminInsertDTO) {
