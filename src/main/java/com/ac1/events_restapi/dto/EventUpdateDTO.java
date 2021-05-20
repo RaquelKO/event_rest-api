@@ -3,32 +3,26 @@ package com.ac1.events_restapi.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.ac1.events_restapi.entities.Place;
+import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventUpdateDTO {
 
-	private Place place;
-
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime startTime;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
-
-	public Place getPlace() {
-		return place;
-	}
-
-	public void setPlace(Place place) {
-		this.place = place;
-	}
 
 	public LocalDate getStartDate() {
 		return startDate;

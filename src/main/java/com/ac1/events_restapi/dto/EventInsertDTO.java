@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import com.ac1.events_restapi.entities.Place;
 import com.ac1.events_restapi.entities.Ticket;
@@ -19,28 +22,43 @@ public class EventInsertDTO {
 	@NotBlank(message = "This field must not be blank!")
 	private String description;
 
-	private Place place;
-
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate startDate;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate endDate;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime startTime;
 
+	@NotNull(message = "This field must not be null!")
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
 	@NotBlank(message = "This field must not be blank!")
 	private String emailContact;
 
+	@NotNull(message = "This field must not be null!")
+	@PositiveOrZero(message = "This field must be a positive number!")
 	private Long amountFreeTickets;
+
+	@NotNull(message = "This field must not be null!")
+	@PositiveOrZero(message = "This field must be a positive number!")
 	private Long amountPayedTickets;
+
+	@NotNull(message = "This field must not be null!")
+	@PositiveOrZero(message = "This field must be a positive number!")
 	private Double priceTicket;
+
 	private List<Place> places = new ArrayList<>();
+
+	@NotNull(message = "This field must not be null!")
+	@Positive(message = "This field must be a positive, bigger than zero, number!")
 	private Long idAdmin;
+
 	private List<Ticket> tickets = new ArrayList<>();
 
 	public String getName() {
@@ -57,14 +75,6 @@ public class EventInsertDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Place getPlace() {
-		return place;
-	}
-
-	public void setPlace(Place place) {
-		this.place = place;
 	}
 
 	public LocalDate getStartDate() {

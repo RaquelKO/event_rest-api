@@ -68,7 +68,6 @@ public class EventService {
 	public Event update(Long id, EventUpdateDTO updateDto) {
 		try {
 			Event entity = repository.getOne(id);
-			entity.addPlace(updateDto.getPlace());
 			entity.setStartDate(updateDto.getStartDate());
 			entity.setEndDate(updateDto.getEndDate());
 			entity.setStartTime(updateDto.getStartTime());
