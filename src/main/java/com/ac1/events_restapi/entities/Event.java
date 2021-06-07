@@ -83,7 +83,7 @@ public class Event implements Serializable {
 		setEmailContact(event.getEmailContact());
 		setAmountFreeTickets(event.getAmountFreeTickets());
 		setAmountPayedTickets(event.getAmountPayedTickets());
-		// addPlace(event.getPlaces().get(0));
+		setPlaces(event.getPlaces());
 		setPriceTicket(event.getPriceTicket());
 		setAdmin(event.getAdmin());
 	}
@@ -198,6 +198,10 @@ public class Event implements Serializable {
 
 	public void addPlace(Place place) {
 		this.places.add(place);
+	}
+
+	public void setPlaces(List<Place> places) {
+		this.places = places;
 	}
 
 	public Admin getAdmin() {

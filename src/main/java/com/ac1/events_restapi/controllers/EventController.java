@@ -2,12 +2,15 @@ package com.ac1.events_restapi.controllers;
 
 import java.net.URI;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
+//import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Event;
+//import com.ac1.events_restapi.entities.Ticket;
 import com.ac1.events_restapi.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/events")
@@ -84,4 +89,42 @@ public class EventController {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	// Places
+
+	@PostMapping("{id}/places/{idPlace}")
+	public ResponseEntity<Event> insertPlace(@PathVariable long id, @PathVariable long idPlace,
+			HttpServletRequest request, UriComponentsBuilder builder) {
+		Event event = service.getEventById(id);
+		event = service.insertPlace(event.getId(), idPlace);
+		UriComponents uriComponents = builder.path(request.getRequestURI() + "/" + idPlace).build();
+		return ResponseEntity.created(uriComponents.toUri()).build();
+	}
+
+	@DeleteMapping("{id}/places/{idPlace}")
+	public ResponseEntity<Void> removePlaceFromEvent(@PathVariable long id, @PathVariable long idPlace) {
+		service.removePlaceFromEvent(id, idPlace);
+		return ResponseEntity.noContent().build();
+	}
+
+	// Tickets
+
+	// @PostMapping("{id}/tickets")
+	// public ResponseEntity<Ticket> sellTicket(@PathVariable Long id, @RequestBody
+	// TicketSellDTO ticketSellDTO) {
+	// Event event = service.getEventById(id);
+	// Ticket ticket = new Ticket();
+	// ticket = service.sellTicket(id, ticketSellDTO);
+	// URI uri =
+	// ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
+	// return ResponseEntity.created(uri).body(ticket);
+	// }
+
+	// @DeleteMapping("{id}/tickets")
+	// public ResponseEntity<Void> returnTicket(@PathVariable Long id, @RequestBody
+	// TicketSellDTO ticketSellDTO) {
+	// service.returnTicket(id, ticketSellDTO);
+	// return ResponseEntity.noContent().build();
+	// }
+
 }

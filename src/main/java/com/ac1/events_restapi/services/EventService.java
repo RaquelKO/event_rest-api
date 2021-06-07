@@ -1,5 +1,8 @@
 package com.ac1.events_restapi.services;
 
+//import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -7,10 +10,16 @@ import javax.persistence.EntityNotFoundException;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
+//import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Admin;
+//import com.ac1.events_restapi.entities.Attendee;
 import com.ac1.events_restapi.entities.Event;
+import com.ac1.events_restapi.entities.Place;
+//import com.ac1.events_restapi.entities.Ticket;
 import com.ac1.events_restapi.repositories.AdminRepository;
+//import com.ac1.events_restapi.repositories.AttendeeRepository;
 import com.ac1.events_restapi.repositories.EventRepository;
+import com.ac1.events_restapi.repositories.PlaceRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,6 +37,12 @@ public class EventService {
 
 	@Autowired
 	private AdminRepository adminRepository;
+
+	@Autowired
+	private PlaceRepository placeRepository;
+
+	// @Autowired
+	// private AttendeeRepository attendeeRepository;
 
 	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String startDate) {
 
@@ -92,4 +107,71 @@ public class EventService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
+
+	public Event insertPlace(Long id, Long idPlace) {
+
+		Optional<Event> op = repository.findById(id);
+		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+		Optional<Place> opPlace = placeRepository.findById(idPlace);
+		Place place = opPlace.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
+
+		if (event.getPlaces().contains(place)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This place already holds this event!");
+		} else if (event.getStartDate().isBefore(LocalDate.now())
+				|| (event.getStartDate().isEqual(LocalDate.now()) && event.getStartTime().isBefore(LocalTime.now()))) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sorry, this event can no longer be modified!");
+		} else {
+			event.addPlace(place);
+			event = repository.save(event);
+			return new Event(event);
+		}
+	}
+
+	public void removePlaceFromEvent(Long id, Long idPlace) {
+
+		Optional<Event> op = repository.findById(id);
+		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+		Optional<Place> opPlace = placeRepository.findById(idPlace);
+		Place place = opPlace.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
+
+		if (event.getPlaces().contains(place)) {
+			event.getPlaces().remove(place);
+			place.getEvents().remove(event);
+			repository.save(event);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This place does not hold this event");
+		}
+
+	}
+
+	// public Ticket sellTicket(Long id, TicketSellDTO ticketSellDTO) {
+
+	// Optional<Event> op = repository.findById(id);
+	// Event event = op.orElseThrow(() -> new
+	// ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+	// Optional<Attendee> opAttendee =
+	// attendeeRepository.findById(ticketSellDTO.getIdAttendee());
+	// Attendee attendee = opAttendee
+	// .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+	// "Attendee not found"));
+
+	// if ((ticketSellDTO.getType().equals(0) & event.getAmountFreeTickets() > 0)
+	// || (ticketSellDTO.getType().equals(1) & event.getAmountPayedTickets() > 0)) {
+	// Ticket ticket = new Ticket();
+	// ticket.setDate(Instant.now());
+	// ticket.setIdAttendee(ticketSellDTO.getIdAttendee());
+	// ticket.setPrice(event.getPriceTicket());
+	// ticket.setType(ticketSellDTO.getType());
+	// return new Ticket(ticket);
+	// } else {
+	// throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sorry, these tickets
+	// are no longer available");
+	// }
+	// }
+
+	// public void returnTicket(Long id, TicketSellDTO ticketSellDTO) {
+	// }
 }
