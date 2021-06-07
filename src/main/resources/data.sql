@@ -9,8 +9,8 @@ INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3222-3333', 1);
 INSERT INTO tb_admin(phone_number, user_id) VALUES ('(11)9999-5555', 2);
 INSERT INTO tb_admin(phone_number, user_id) VALUES ('(15)3333-4444', 3);
 
-INSERT INTO tb_attendee(balance, user_id) VALUES (7.5, 4);
-INSERT INTO tb_attendee(balance, user_id) VALUES (15.0, 5);
+INSERT INTO tb_attendee(balance, user_id) VALUES (0.0, 4);
+INSERT INTO tb_attendee(balance, user_id) VALUES (0.0, 5);
 INSERT INTO tb_attendee(balance, user_id) VALUES (0.0, 6);
 
 INSERT INTO tb_place(name, address) VALUES ('Auditório', 'Rua X, 123');
