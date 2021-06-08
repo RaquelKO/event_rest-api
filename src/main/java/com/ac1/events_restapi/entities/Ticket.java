@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.ac1.events_restapi.dto.TicketSellDTO;
 
 @Entity
 @Table(name = "TB_TICKET")
@@ -23,13 +26,24 @@ public class Ticket implements Serializable {
 	private Double price;
 	private TicketType type;
 
+	@Transient
+	private Long idAttendee;
+
 	public Ticket() {
 
 	}
 
-	public Ticket(Instant date, Double price) {
-		this.date = date;
-		this.price = price;
+	public Ticket(Ticket ticket) {
+		setId(ticket.getId());
+		setDate(ticket.getDate());
+		setPrice(ticket.getPrice());
+		setType(ticket.getType());
+		setIdAttendee(ticket.getIdAttendee());
+	}
+
+	public Ticket(TicketSellDTO ticketSellDTO) {
+		this.type = ticketSellDTO.getType();
+		this.idAttendee = ticketSellDTO.getIdAttendee();
 	}
 
 	public Long getId() {
@@ -62,6 +76,14 @@ public class Ticket implements Serializable {
 
 	public void setType(TicketType type) {
 		this.type = type;
+	}
+
+	public Long getIdAttendee() {
+		return idAttendee;
+	}
+
+	public void setIdAttendee(Long idAttendee) {
+		this.idAttendee = idAttendee;
 	}
 
 	@Override

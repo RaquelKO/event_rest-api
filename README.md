@@ -20,8 +20,7 @@
 ```
 {
     "name": "Attendee Name",
-    "email": "attend@email.com",
-    "balance": 25.0
+    "email": "attend@email.com"
 }
 ```
 
@@ -49,5 +48,14 @@
     "amountPayedTickets": 100,
     "priceTicket": 15.0,
     "idAdmin": 1
+}
+```
+
+- 🎟️ Ticket:
+
+```
+{
+    "idAttendee": 5,
+    "type": 0
 }
 ```

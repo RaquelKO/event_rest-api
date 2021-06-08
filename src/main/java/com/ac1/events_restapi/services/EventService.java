@@ -1,6 +1,6 @@
 package com.ac1.events_restapi.services;
 
-//import java.time.Instant;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -10,16 +10,18 @@ import javax.persistence.EntityNotFoundException;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
-//import com.ac1.events_restapi.dto.TicketSellDTO;
+import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Admin;
-//import com.ac1.events_restapi.entities.Attendee;
+import com.ac1.events_restapi.entities.Attendee;
 import com.ac1.events_restapi.entities.Event;
 import com.ac1.events_restapi.entities.Place;
-//import com.ac1.events_restapi.entities.Ticket;
+import com.ac1.events_restapi.entities.Ticket;
+import com.ac1.events_restapi.entities.TicketType;
 import com.ac1.events_restapi.repositories.AdminRepository;
-//import com.ac1.events_restapi.repositories.AttendeeRepository;
+import com.ac1.events_restapi.repositories.AttendeeRepository;
 import com.ac1.events_restapi.repositories.EventRepository;
 import com.ac1.events_restapi.repositories.PlaceRepository;
+import com.ac1.events_restapi.repositories.TicketRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,8 +43,11 @@ public class EventService {
 	@Autowired
 	private PlaceRepository placeRepository;
 
-	// @Autowired
-	// private AttendeeRepository attendeeRepository;
+	@Autowired
+	private AttendeeRepository attendeeRepository;
+
+	@Autowired
+	private TicketRepository ticketRepository;
 
 	public Page<EventDTO> getAllEvents(PageRequest pageRequest, String name, String description, String startDate) {
 
@@ -117,7 +122,7 @@ public class EventService {
 		Place place = opPlace.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
 
 		if (event.getPlaces().contains(place)) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This place already holds this event!");
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This place is already scheduled for this event!");
 		} else if (event.getStartDate().isBefore(LocalDate.now())
 				|| (event.getStartDate().isEqual(LocalDate.now()) && event.getStartTime().isBefore(LocalTime.now()))) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sorry, this event can no longer be modified!");
@@ -141,37 +146,93 @@ public class EventService {
 			place.getEvents().remove(event);
 			repository.save(event);
 		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This place does not hold this event");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This place is not scheduled for this event");
 		}
 
 	}
 
-	// public Ticket sellTicket(Long id, TicketSellDTO ticketSellDTO) {
+	public Ticket sellTicket(Long id, TicketSellDTO ticketSellDTO) {
 
-	// Optional<Event> op = repository.findById(id);
-	// Event event = op.orElseThrow(() -> new
-	// ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+		Optional<Event> op = repository.findById(id);
+		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
 
-	// Optional<Attendee> opAttendee =
-	// attendeeRepository.findById(ticketSellDTO.getIdAttendee());
-	// Attendee attendee = opAttendee
-	// .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-	// "Attendee not found"));
+		Optional<Attendee> opAttendee = attendeeRepository.findById(ticketSellDTO.getIdAttendee());
+		Attendee attendee = opAttendee
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found"));
 
-	// if ((ticketSellDTO.getType().equals(0) & event.getAmountFreeTickets() > 0)
-	// || (ticketSellDTO.getType().equals(1) & event.getAmountPayedTickets() > 0)) {
-	// Ticket ticket = new Ticket();
-	// ticket.setDate(Instant.now());
-	// ticket.setIdAttendee(ticketSellDTO.getIdAttendee());
-	// ticket.setPrice(event.getPriceTicket());
-	// ticket.setType(ticketSellDTO.getType());
-	// return new Ticket(ticket);
-	// } else {
-	// throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sorry, these tickets
-	// are no longer available");
-	// }
-	// }
+		if (event.getStartDate().isBefore(LocalDate.now())
+				|| (event.getStartDate().isEqual(LocalDate.now()) && event.getStartTime().isBefore(LocalTime.now()))) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+					"Sorry, you can no longer purchase tickets for this event!");
+		}
 
-	// public void returnTicket(Long id, TicketSellDTO ticketSellDTO) {
-	// }
+		if ((ticketSellDTO.getType().equals(TicketType.FREE) && event.getAmountFreeTickets() > 0
+				&& (event.getFreeTicketsSelled() < event.getAmountFreeTickets()))
+				|| (ticketSellDTO.getType().equals(TicketType.PAYED) && event.getAmountPayedTickets() > 0
+						&& event.getPayedTicketsSelled() < event.getAmountPayedTickets())) {
+
+			Ticket ticket = new Ticket();
+
+			ticket.setDate(Instant.now());
+			ticket.setIdAttendee(attendee.getId());
+			ticket.setPrice(event.getPriceTicket());
+			ticket.setType(ticketSellDTO.getType());
+			attendee.addTicket(ticket);
+			event.addTicket(ticket);
+
+			if (ticketSellDTO.getType().equals(TicketType.FREE)) {
+				event.setFreeTicketsSelled(event.getFreeTicketsSelled() + 1);
+			} else {
+				event.setPayedTicketsSelled(event.getPayedTicketsSelled() + 1);
+			}
+
+			ticketRepository.save(ticket);
+			attendeeRepository.save(attendee);
+			repository.save(event);
+
+			return new Ticket(ticket);
+		} else {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+					"Sorry, these type of tickets are no longer available for this event!");
+		}
+	}
+
+	public void returnTicket(Long id, Long idTicket) {
+
+		Optional<Event> op = repository.findById(id);
+		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+		Optional<Ticket> opTicket = ticketRepository.findById(idTicket);
+		Ticket ticket = opTicket
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
+
+		Attendee attendee = null;
+		for (Attendee a : attendeeRepository.findAll()) {
+			for (Ticket t : a.getTickets()) {
+				if (t.equals(ticket)) {
+					attendee = a;
+				}
+			}
+		}
+
+		// Optional<Attendee> opAttendee =
+		// attendeeRepository.findById(ticket.getIdAttendee());
+		// Attendee attendee = opAttendee
+		// .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+		// "Attendee not found"));
+
+		if (ticket.getType().equals(TicketType.PAYED)) {
+			attendee.setBalance(attendee.getBalance() + ticket.getPrice());
+			event.setPayedTicketsSelled(event.getPayedTicketsSelled() - 1);
+		} else {
+			event.setFreeTicketsSelled(event.getFreeTicketsSelled() - 1);
+		}
+
+		attendee.getTickets().remove(ticket);
+		event.getTickets().remove(ticket);
+		ticketRepository.delete(ticket);
+
+		attendeeRepository.save(attendee);
+		repository.save(event);
+	}
 }

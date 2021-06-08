@@ -51,6 +51,8 @@ public class Event implements Serializable {
 	private String emailContact;
 	private Long amountFreeTickets;
 	private Long amountPayedTickets;
+	private Long freeTicketsSelled;
+	private Long payedTicketsSelled;
 	private Double priceTicket;
 
 	@ManyToMany
@@ -64,6 +66,7 @@ public class Event implements Serializable {
 	@Transient
 	private Long idAdmin;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "EVENT_ID")
 	private List<Ticket> tickets = new ArrayList<>();
@@ -83,6 +86,8 @@ public class Event implements Serializable {
 		setEmailContact(event.getEmailContact());
 		setAmountFreeTickets(event.getAmountFreeTickets());
 		setAmountPayedTickets(event.getAmountPayedTickets());
+		setFreeTicketsSelled(event.getFreeTicketsSelled());
+		setPayedTicketsSelled(event.getPayedTicketsSelled());
 		setPlaces(event.getPlaces());
 		setPriceTicket(event.getPriceTicket());
 		setAdmin(event.getAdmin());
@@ -98,6 +103,8 @@ public class Event implements Serializable {
 		this.emailContact = insertDto.getEmailContact();
 		this.amountFreeTickets = insertDto.getAmountFreeTickets();
 		this.amountPayedTickets = insertDto.getAmountPayedTickets();
+		this.freeTicketsSelled = 0l;
+		this.payedTicketsSelled = 0l;
 		this.priceTicket = insertDto.getPriceTicket();
 		this.places = insertDto.getPlaces();
 		this.idAdmin = insertDto.getIdAdmin();
@@ -218,6 +225,30 @@ public class Event implements Serializable {
 
 	public void setIdAdmin(Long idAdmin) {
 		this.idAdmin = idAdmin;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
+	}
+
+	public Long getFreeTicketsSelled() {
+		return freeTicketsSelled;
+	}
+
+	public void setFreeTicketsSelled(Long freeTicketsSelled) {
+		this.freeTicketsSelled = freeTicketsSelled;
+	}
+
+	public Long getPayedTicketsSelled() {
+		return payedTicketsSelled;
+	}
+
+	public void setPayedTicketsSelled(Long payedTicketsSelled) {
+		this.payedTicketsSelled = payedTicketsSelled;
 	}
 
 	@Override

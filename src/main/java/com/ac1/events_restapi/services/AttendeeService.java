@@ -48,7 +48,6 @@ public class AttendeeService {
 		try {
 			Attendee entity = attendRepository.getOne(id);
 			entity.setEmail(attendUpdateDto.getEmail());
-			entity.setBalance(attendUpdateDto.getBalance());
 
 			entity = attendRepository.save(entity);
 			return new Attendee(entity);

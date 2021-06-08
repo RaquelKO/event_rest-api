@@ -12,6 +12,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.ac1.events_restapi.dto.AttendeeInsertDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_ATTENDEE")
@@ -20,6 +21,7 @@ public class Attendee extends BaseUser {
 
 	private Double balance;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ATTENDEE_USER_ID")
 	private List<Ticket> tickets = new ArrayList<>();
@@ -28,17 +30,17 @@ public class Attendee extends BaseUser {
 
 	}
 
-	public Attendee(Attendee attend) {
-		setId(attend.getId());
-		setName(attend.getName());
-		setEmail(attend.getEmail());
-		setBalance(attend.getBalance());
+	public Attendee(Attendee attendee) {
+		setId(attendee.getId());
+		setName(attendee.getName());
+		setEmail(attendee.getEmail());
+		setBalance(attendee.getBalance());
 	}
 
-	public Attendee(AttendeeInsertDTO attendInsertDTO) {
-		super.setName(attendInsertDTO.getName());
-		super.setEmail(attendInsertDTO.getEmail());
-		this.balance = attendInsertDTO.getBalance();
+	public Attendee(AttendeeInsertDTO attendeeInsertDTO) {
+		super.setName(attendeeInsertDTO.getName());
+		super.setEmail(attendeeInsertDTO.getEmail());
+		this.balance = 0.0;
 	}
 
 	public Double getBalance() {
@@ -47,6 +49,14 @@ public class Attendee extends BaseUser {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
 	}
 
 }

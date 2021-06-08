@@ -1,8 +1,6 @@
 package com.ac1.events_restapi.dto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 
 public class AttendeeInsertDTO {
 
@@ -11,10 +9,6 @@ public class AttendeeInsertDTO {
 
 	@NotBlank(message = "This field must not be blank!")
 	private String email;
-
-	@NotNull(message = "This field must not be null!")
-	@PositiveOrZero(message = "This field must not be a positive number!")
-	private Double balance;
 
 	public String getName() {
 		return name;
@@ -30,14 +24,6 @@ public class AttendeeInsertDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(Double balance) {
-		this.balance = balance;
 	}
 
 }

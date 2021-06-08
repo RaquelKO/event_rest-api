@@ -8,9 +8,9 @@ import javax.validation.Valid;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
-//import com.ac1.events_restapi.dto.TicketSellDTO;
+import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Event;
-//import com.ac1.events_restapi.entities.Ticket;
+import com.ac1.events_restapi.entities.Ticket;
 import com.ac1.events_restapi.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,22 +109,19 @@ public class EventController {
 
 	// Tickets
 
-	// @PostMapping("{id}/tickets")
-	// public ResponseEntity<Ticket> sellTicket(@PathVariable Long id, @RequestBody
-	// TicketSellDTO ticketSellDTO) {
-	// Event event = service.getEventById(id);
-	// Ticket ticket = new Ticket();
-	// ticket = service.sellTicket(id, ticketSellDTO);
-	// URI uri =
-	// ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-	// return ResponseEntity.created(uri).body(ticket);
-	// }
+	@PostMapping("{id}/tickets")
+	public ResponseEntity<Ticket> sellTicket(@PathVariable Long id, @RequestBody TicketSellDTO ticketSellDTO) {
+		Event event = service.getEventById(id);
+		Ticket ticket = new Ticket();
+		ticket = service.sellTicket(id, ticketSellDTO);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
+		return ResponseEntity.created(uri).body(ticket);
+	}
 
-	// @DeleteMapping("{id}/tickets")
-	// public ResponseEntity<Void> returnTicket(@PathVariable Long id, @RequestBody
-	// TicketSellDTO ticketSellDTO) {
-	// service.returnTicket(id, ticketSellDTO);
-	// return ResponseEntity.noContent().build();
-	// }
+	@DeleteMapping("{id}/tickets/{idTicket}")
+	public ResponseEntity<Void> returnTicket(@PathVariable Long id, @PathVariable Long idTicket) {
+		service.returnTicket(id, idTicket);
+		return ResponseEntity.noContent().build();
+	}
 
 }
