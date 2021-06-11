@@ -91,6 +91,12 @@ public class EventService {
 	public Event update(Long id, EventUpdateDTO updateDto) {
 		try {
 			Event entity = repository.getOne(id);
+
+			if (entity.getFreeTicketsSelled() > 0 || entity.getPayedTicketsSelled() > 0) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+						"This event has sold tickets, therefore it can no longer be modified!");
+			}
+
 			entity.setStartDate(updateDto.getStartDate());
 			entity.setEndDate(updateDto.getEndDate());
 			entity.setStartTime(updateDto.getStartTime());
@@ -110,6 +116,13 @@ public class EventService {
 
 	public void delete(Long id) {
 		try {
+			Event entity = repository.getOne(id);
+
+			if (entity.getFreeTicketsSelled() > 0 || entity.getPayedTicketsSelled() > 0) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+						"This event has sold tickets, therefore it can not be deleted!");
+			}
+
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
