@@ -3,6 +3,7 @@ package com.ac1.events_restapi.services;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -10,6 +11,8 @@ import javax.persistence.EntityNotFoundException;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
+import com.ac1.events_restapi.dto.TicketEventDTO;
+import com.ac1.events_restapi.dto.TicketListedDTO;
 import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Admin;
 import com.ac1.events_restapi.entities.Attendee;
@@ -234,5 +237,31 @@ public class EventService {
 
 		attendeeRepository.save(attendee);
 		repository.save(event);
+	}
+
+	public TicketEventDTO getTickets(Long id) {
+
+		Optional<Event> op = repository.findById(id);
+		Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+		List<Attendee> attendees = attendeeRepository.findAll();
+
+		TicketEventDTO ticketEventDTO = new TicketEventDTO();
+		for (Ticket ticket : event.getTickets()) {
+			for (Attendee attendee : attendees) {
+				for (Ticket attendeeTicket : attendee.getTickets()) {
+					if (attendeeTicket.equals(ticket)) {
+						ticketEventDTO
+								.addTickets(new TicketListedDTO(ticket.getId(), ticket.getType(), attendee.getName()));
+					}
+				}
+			}
+		}
+
+		ticketEventDTO.setAmountFreeTickets(event.getAmountFreeTickets());
+		ticketEventDTO.setFreeTicketsSelled(event.getFreeTicketsSelled());
+		ticketEventDTO.setAmountPayedTickets(event.getAmountFreeTickets());
+		ticketEventDTO.setPayedTicketsSelled(event.getPayedTicketsSelled());
+		return new TicketEventDTO(ticketEventDTO);
 	}
 }

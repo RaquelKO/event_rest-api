@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.ac1.events_restapi.dto.EventDTO;
 import com.ac1.events_restapi.dto.EventInsertDTO;
 import com.ac1.events_restapi.dto.EventUpdateDTO;
+import com.ac1.events_restapi.dto.TicketEventDTO;
 import com.ac1.events_restapi.dto.TicketSellDTO;
 import com.ac1.events_restapi.entities.Event;
 import com.ac1.events_restapi.entities.Ticket;
@@ -109,8 +110,14 @@ public class EventController {
 
 	// Tickets
 
+	@GetMapping("{id}/tickets")
+	public ResponseEntity<TicketEventDTO> getTickets(@PathVariable Long id) {
+		TicketEventDTO ticketEventDTO = service.getTickets(id);
+		return ResponseEntity.ok().body(ticketEventDTO);
+	}
+
 	@PostMapping("{id}/tickets")
-	public ResponseEntity<Ticket> sellTicket(@PathVariable Long id, @RequestBody TicketSellDTO ticketSellDTO) {
+	public ResponseEntity<Ticket> sellTicket(@PathVariable Long id, @Valid @RequestBody TicketSellDTO ticketSellDTO) {
 		Event event = service.getEventById(id);
 		Ticket ticket = new Ticket();
 		ticket = service.sellTicket(id, ticketSellDTO);
