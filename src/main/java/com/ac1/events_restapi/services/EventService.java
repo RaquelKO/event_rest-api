@@ -137,6 +137,14 @@ public class EventService {
 		Optional<Place> opPlace = placeRepository.findById(idPlace);
 		Place place = opPlace.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
 
+		for (Event e : place.getEvents()) {
+			if ((event.getStartDate().isBefore(e.getStartDate()) && event.getEndDate().isBefore(e.getStartDate()))
+					|| (event.getStartDate().isAfter(e.getEndDate()) && event.getEndDate().isAfter(e.getEndDate()))) {
+			} else {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This place is not available on this date!");
+			}
+		}
+
 		if (event.getPlaces().contains(place)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This place is already scheduled for this event!");
 		} else if (event.getStartDate().isBefore(LocalDate.now())
@@ -147,6 +155,7 @@ public class EventService {
 			event = repository.save(event);
 			return new Event(event);
 		}
+
 	}
 
 	public void removePlaceFromEvent(Long id, Long idPlace) {
@@ -157,7 +166,11 @@ public class EventService {
 		Optional<Place> opPlace = placeRepository.findById(idPlace);
 		Place place = opPlace.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
 
-		if (event.getPlaces().contains(place)) {
+		if (event.getPlaces().contains(place) && (event.getStartDate().isBefore(LocalDate.now())
+				|| (event.getStartDate().isEqual(LocalDate.now()) && event.getStartTime().isBefore(LocalTime.now())))) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+					"Sorry, this place can no longer be deleted from this event!");
+		} else if (event.getPlaces().contains(place)) {
 			event.getPlaces().remove(place);
 			place.getEvents().remove(event);
 			repository.save(event);
