@@ -3,12 +3,14 @@ package com.ac1.events_restapi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.ac1.events_restapi.entities.Ticket;
 
 public class AttendeeUpdateDTO {
 
+	@Email(message = "Must be a valid e-mail address!")
 	@NotBlank(message = "This field must not be blank!")
 	private String email;
 

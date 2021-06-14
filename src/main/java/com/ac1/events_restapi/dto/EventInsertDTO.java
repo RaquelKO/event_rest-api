@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -38,6 +39,7 @@ public class EventInsertDTO {
 	@JsonFormat(pattern = "HH:mm:ss")
 	private LocalTime endTime;
 
+	@Email(message = "Must be a valid e-mail address!")
 	@NotBlank(message = "This field must not be blank!")
 	private String emailContact;
 

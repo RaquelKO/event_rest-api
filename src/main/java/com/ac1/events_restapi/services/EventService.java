@@ -244,12 +244,6 @@ public class EventService {
 			}
 		}
 
-		// Optional<Attendee> opAttendee =
-		// attendeeRepository.findById(ticket.getIdAttendee());
-		// Attendee attendee = opAttendee
-		// .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-		// "Attendee not found"));
-
 		if (ticket.getType().equals(TicketType.PAYED)) {
 			attendee.setBalance(attendee.getBalance() + ticket.getPrice());
 			event.setPayedTicketsSelled(event.getPayedTicketsSelled() - 1);

@@ -32,6 +32,13 @@ public class AdminService {
 	public Admin insert(AdminInsertDTO adminInsertDTO) {
 
 		Admin entity = new Admin(adminInsertDTO);
+		for (Admin a : adminRepository.findAll()) {
+			if (entity.getEmail().equals(a.getEmail())) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+						"This email address is already being used, please choose another one.");
+			}
+		}
+
 		entity = adminRepository.save(entity);
 		return new Admin(entity);
 	}
@@ -47,9 +54,14 @@ public class AdminService {
 	public Admin update(Long id, AdminUpdateDTO adminUpdateDto) {
 		try {
 			Admin entity = adminRepository.getOne(id);
+			for (Admin a : adminRepository.findAll()) {
+				if (adminUpdateDto.getEmail().equals(a.getEmail())) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+							"This email address is already being used, please choose another one.");
+				}
+			}
 			entity.setEmail(adminUpdateDto.getEmail());
 			entity.setPhoneNumber(adminUpdateDto.getPhoneNumber());
-
 			entity = adminRepository.save(entity);
 			return new Admin(entity);
 		} catch (EntityNotFoundException e) {

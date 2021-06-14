@@ -22,23 +22,29 @@ import org.springframework.web.server.ResponseStatusException;
 public class AttendeeService {
 
 	@Autowired
-	private AttendeeRepository attendRepository;
+	private AttendeeRepository attendeeRepository;
 
 	public Page<AttendeeDTO> getAttendees(PageRequest pageRequest) {
-		Page<Attendee> list = attendRepository.findAttendeePageable(pageRequest);
+		Page<Attendee> list = attendeeRepository.findAttendeePageable(pageRequest);
 		return list.map(attendee -> new AttendeeDTO(attendee));
 	}
 
 	public Attendee insert(AttendeeInsertDTO attendInsertDTO) {
 
 		Attendee entity = new Attendee(attendInsertDTO);
-		entity = attendRepository.save(entity);
+		for (Attendee a : attendeeRepository.findAll()) {
+			if (entity.getEmail().equals(a.getEmail())) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+						"This email address is already being used, please choose another one.");
+			}
+		}
+		entity = attendeeRepository.save(entity);
 		return new Attendee(entity);
 	}
 
 	public Attendee getAttendeeById(Long id) {
 
-		Optional<Attendee> op = attendRepository.findById(id);
+		Optional<Attendee> op = attendeeRepository.findById(id);
 		Attendee attend = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found"));
 
 		return new Attendee(attend);
@@ -46,10 +52,15 @@ public class AttendeeService {
 
 	public Attendee update(Long id, AttendeeUpdateDTO attendUpdateDto) {
 		try {
-			Attendee entity = attendRepository.getOne(id);
+			Attendee entity = attendeeRepository.getOne(id);
+			for (Attendee a : attendeeRepository.findAll()) {
+				if (attendUpdateDto.getEmail().equals(a.getEmail())) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+							"This email address is already being used, please choose another one.");
+				}
+			}
 			entity.setEmail(attendUpdateDto.getEmail());
-
-			entity = attendRepository.save(entity);
+			entity = attendeeRepository.save(entity);
 			return new Attendee(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found");
@@ -58,7 +69,7 @@ public class AttendeeService {
 
 	public void delete(Long id) {
 		try {
-			attendRepository.deleteById(id);
+			attendeeRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found");
 		}
